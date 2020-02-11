@@ -1,0 +1,392 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "Tripster API",
+    "version" : "3.0.0.96",
+    "title" : "Tripster API"
+  },
+  "servers" : [ {
+    "url" : "https://www.tripster.com/api/v3"
+  }, {
+    "url" : "https://test-www.tripster.net/api/v3"
+  } ],
+  "security" : [ {
+    "ApiKey" : [ ]
+  } ],
+  "paths" : {
+    "/packages" : {
+      "get" : {
+        "tags" : [ "Packages" ],
+        "operationId" : "PackageList",
+        "parameters" : [ {
+          "name" : "loc",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ids",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "x-nullable" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Package"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packages/{id}" : {
+      "get" : {
+        "tags" : [ "Packages" ],
+        "operationId" : "PackageDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "adults",
+          "in" : "query",
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        }, {
+          "name" : "childAges",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "x-nullable" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Package"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "Products" ],
+        "operationId" : "ProductList",
+        "parameters" : [ {
+          "name" : "loc",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "typ",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/ProductType"
+          }
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "x-nullable" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "x-nullable" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}" : {
+      "get" : {
+        "tags" : [ "Products" ],
+        "operationId" : "ProductDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "x-nullable" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "x-nullable" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "ApiKey" : {
+        "type" : "apiKey",
+        "name" : "x-api-key",
+        "in" : "header"
+      }
+    },
+    "schemas" : {
+      "Product" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "required" : [ "id", "price", "savings" ],
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "key" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "savings" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "productUrl" : {
+            "type" : "string"
+          },
+          "logo" : {
+            "type" : "string"
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/ProductType"
+          },
+          "tag" : {
+            "type" : "string"
+          },
+          "rating" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "reviewCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "available" : {
+            "type" : "boolean"
+          },
+          "calendar" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CalendarDay"
+            }
+          }
+        }
+      },
+      "CalendarDay" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "available" : {
+            "type" : "boolean"
+          },
+          "open" : {
+            "type" : "string"
+          },
+          "close" : {
+            "type" : "string"
+          },
+          "times" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CalendarTime"
+            }
+          }
+        }
+      },
+      "CalendarTime" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "time" : {
+            "type" : "string"
+          },
+          "available" : {
+            "type" : "boolean"
+          },
+          "productUrl" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Package" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "required" : [ "id", "price", "savings" ],
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "key" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "packageUrl" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "savings" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "minNights" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "available" : {
+            "type" : "boolean"
+          },
+          "steps" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Step"
+            }
+          }
+        }
+      },
+      "Step" : {
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "logo" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "available" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "ProductType" : {
+        "type" : "string",
+        "enum" : [ "hotel", "attraction", "show", "certificate" ]
+      }
+    }
+  }
+}
